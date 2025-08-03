@@ -13,20 +13,23 @@ import breakGif from "./assets/break.gif";
 import meowSound from "./assets/meow.mp3";
 import closeBtn from "./assets/close.png";
 import backgroundBlue from "./assets/background-blue.png";
-import backgroundGreen from "./assets/background-green.png";
-import minimizeBtn from "./assets/minimize.png"; 
+import minimizeBtn from "./assets/minimize.png";
+import background2 from "./assets/background-img2.png";
 
 function App() {
 
   const [timeLeft, setTimeLeft] = useState(25 * 60);
+  const [isEditing, setIsEditing] = useState(false);
+  const [inputTime, setInputTime] = useState('');
   const [isRunning, setIsRunning] = useState(false);
   const [breakButtonImage, setBreakButtonImage] = useState(breakBtn);
   const [workButtonImage, setWorkButtonImage] = useState(workBtn);
   const [gifImage, setGifImage] = useState(idleGif);
   const [isBreak, setIsBreak] = useState(false);
+  const [backgroundImage, setBackgroundImage] = useState(backgroundBlue);
   const [image, setImage] = useState(playImg);
   const [Encouragement, setEncouragement] = useState("");
-  
+
   const cheerMessages = [
     "You can do it!",
     "Keep going!",
@@ -37,6 +40,11 @@ function App() {
     "Stay hydrated!",
     "Snacks, maybe?",
     "Stretch your legs!"
+  ];
+
+  const images = [
+    backgroundBlue,
+    background2,
   ];
 
   // Encouragement message updater - Fixed timer type
@@ -57,6 +65,17 @@ function App() {
     }
     return () => clearInterval(messageInterval);
   }, [isRunning, isBreak]);
+
+  useEffect(() => {
+    let imageInterval: ReturnType<typeof setInterval>;
+    let index = 0;
+    imageInterval = setInterval(() => {
+      setBackgroundImage(images[index]);
+      index = (index + 1) % images.length;
+    }, 1000); // Change image every 1 seconds
+    return () => clearInterval(imageInterval);
+  }, []);
+
 
   // Countdown timer - Fixed timer type
   useEffect(() => {
@@ -101,7 +120,24 @@ function App() {
     setWorkButtonImage(breakMode ? workBtn : workBtnClicked);
     setTimeLeft(breakMode ? 5 * 60 : 25 * 60);
     setGifImage(idleGif);
+    setImage(playImg);
   };
+
+  const handleEditClick = (e: React.MouseEvent<HTMLHeadingElement>) => {
+    console.log('Timer clicked!'); // Debug log
+    e.preventDefault();
+    e.stopPropagation();
+    setInputTime(formatTime(timeLeft));
+    setIsEditing(true);
+  };
+
+  const handleTimeSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    const [minutes, seconds] = inputTime.split(':').map(Number);
+    const newTimeLeft = (minutes * 60) + seconds;
+    setTimeLeft(newTimeLeft);
+    setIsEditing(false);
+  }
 
   const handleClick = () => {
     if (!isRunning) {
@@ -135,17 +171,17 @@ function App() {
   const containerClass = `home-container ${isRunning ? "background-green" : ""}`;
 
   return (
-    <div 
-      className={containerClass} 
-      style={{ 
+    <div
+      className={containerClass}
+      style={{
         position: 'relative',
-        backgroundImage: `url(${isRunning ? backgroundGreen : backgroundBlue})`
+        backgroundImage: `url(${backgroundImage})`
       }}
     >
       <div className="window-controls">
         <button className='minimize-button' onClick={handleMinimizeClick}>
-                  <img src={minimizeBtn} alt="Minimize" />
-                  </button>
+          <img src={minimizeBtn} alt="Minimize" />
+        </button>
         <button className='close-button' onClick={handleCloseClick}>
           <img src={closeBtn} alt="Close" />
         </button>
@@ -165,8 +201,27 @@ function App() {
           {Encouragement}
         </p>
 
-        <h1 className='home-timer'>{formatTime(timeLeft)}</h1>
-        <img src={gifImage} alt="Timer Status" className='gif-image' />
+        {isEditing ? (
+          <form onSubmit={handleTimeSubmit} className="timer-edit-form">
+            <input
+              type="text"
+              value={inputTime}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputTime(e.target.value)}
+              placeholder="MM:SS"
+              pattern="[0-9]{1,2}:[0-9]{2}"
+              className="timer-input"
+              autoFocus
+              onBlur={() => setIsEditing(false)}
+            />
+          </form>
+        ) : (
+          <>
+            <h1 className='home-timer' onClick={handleEditClick}>
+              {formatTime(timeLeft)}
+            </h1>
+            <img src={gifImage} alt="Timer Status" className='gif-image' />
+          </>
+        )}
 
         <button className='home-button' onClick={handleClick}>
           <img src={image} alt="Button Icon" />
