@@ -107,7 +107,9 @@ body {
   margin: 10px 0;
   font-weight: bold;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-  -webkit-app-region: drag; /* Timer can be used for dragging */
+  -webkit-app-region: no-drag;
+  display: block; /* Ensure it's on its own line */
+ pointer-events: auto;
 }
 
 .gif-image {
@@ -115,6 +117,31 @@ body {
   width: auto;
   margin: 10px 0;
   -webkit-app-region: drag; /* GIF can be used for dragging */
+  display: block;
+}
+.timer-input {
+  font-size: 50px;
+  color: #d09caf;
+  margin: 10px 0;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  -webkit-app-region: no-drag; /* Make input clickable */
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-align: center;
+  outline: none;
+  font-family: 'Retrograde-Regular', Arial, sans-serif;
+}
+
+.timer-input:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.2);
+}
+.timer-edit-form {
+  display: block;
+  -webkit-app-region: no-drag;
 }
 
 .home-button {
@@ -151,14 +178,14 @@ body {
   background: rgba(255, 255, 255, 0.1);
   border: none;
   cursor: pointer;
-  padding: 8px;
   border-radius: 50%;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 24px;  
+  height: 24px; 
+  padding: 4px;
   -webkit-app-region: no-drag;
 }
 
@@ -177,14 +204,6 @@ body {
 .close-button img {
   width: 16px;  /* Adjust to match your icon sizes */
   height: 16px; /* Maintain aspect ratio */
-}
-
-/* Optional: Make the buttons smaller if needed */
-.minimize-button,
-.close-button {
-  width: 24px;  /* Reduced from 32px */
-  height: 24px; /* Reduced from 32px */
-  padding: 4px; /* Reduced from 8px */
 }
 
 .minimize-symbol,
