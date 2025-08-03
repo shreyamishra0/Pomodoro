@@ -1,0 +1,52 @@
+{
+  "name": "work-timer",
+  "version": "1.0.0",
+  "description": "A Pomodoro timer application",
+  "author": "Shreya Mishra~<shreyamishra902@gmail.com>",
+  "main": "public/electron.cjs",
+  "homepage": "./",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "electron": "electron .",
+    "build-electron": "npm run build && electron-builder",
+    "dist": "npm run build && electron-builder --publish=never",
+    "pack": "npm run build && electron-builder --dir"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "electron": "^26.0.0",
+    "electron-builder": "^24.6.4",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  },
+  "build": {
+    "appId": "com.shreyamishra.worktimer",
+    "productName": "Work Timer",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "public/electron.cjs",
+      "public/preload.js", 
+      "public/app-icon.ico",
+      "src/assets/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "public/app-icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

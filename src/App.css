@@ -1,0 +1,224 @@
+@font-face {
+  font-family: 'Retrograde-Regular';
+  src: url('./assets/Retrograde-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Retrograde-Regular', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  width: 400px;
+  height: 400px;
+}
+
+.home-container {
+  width: 400px;
+  height: 400px;
+  background-image: url('./assets/background-blue.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  box-sizing: border-box;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background-color: #4a90e2;
+  flex-shrink: 0;
+  -webkit-app-region: drag; /* Makes the entire container draggable */
+}
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  padding: 60px 20px 20px 20px;
+  box-sizing: border-box;
+  z-index: 1;
+  -webkit-app-region: no-drag; /* Allow interactions with content */
+}
+
+.encouragement-text {
+  font-size: 1.25rem;
+  color: #b1cad8;
+  margin-bottom: 0.5rem;
+  animation: fadeIn 1s ease-in-out;
+  transition: opacity 0.8s ease;
+  min-height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.encouragement-text.hidden {
+  opacity: 0;
+}
+
+.background-green {
+  background-image: url('./assets/background-green.png');
+  background-color: #5cb85c;
+}
+
+.home-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  -webkit-app-region: no-drag;
+}
+
+.image-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+  -webkit-app-region: no-drag;
+}
+
+.image-button:hover {
+  transform: scale(1.05);
+}
+
+.image-button img {
+  width: 60px;
+  height: auto;
+  display: block;
+}
+
+.home-timer {
+  font-size: 50px;
+  color: #d09caf;
+  margin: 10px 0;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  -webkit-app-region: drag; /* Timer can be used for dragging */
+}
+
+.gif-image {
+  height: 80px;
+  width: auto;
+  margin: 10px 0;
+  -webkit-app-region: drag; /* GIF can be used for dragging */
+}
+
+.home-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+  -webkit-app-region: no-drag;
+}
+
+.home-button:hover {
+  transform: scale(1.05);
+}
+
+.home-button img {
+  width: 50px;
+  height: auto;
+  display: block;
+}
+
+.window-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+  -webkit-app-region: no-drag;
+}
+
+.minimize-button,
+.close-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  -webkit-app-region: no-drag;
+}
+
+.minimize-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.close-button:hover {
+  background-color: rgba(255, 100, 100, 0.6);
+  transform: scale(1.1);
+}
+
+/* Add this to your existing CSS */
+.minimize-button img,
+.close-button img {
+  width: 16px;  /* Adjust to match your icon sizes */
+  height: 16px; /* Maintain aspect ratio */
+}
+
+/* Optional: Make the buttons smaller if needed */
+.minimize-button,
+.close-button {
+  width: 24px;  /* Reduced from 32px */
+  height: 24px; /* Reduced from 32px */
+  padding: 4px; /* Reduced from 8px */
+}
+
+.minimize-symbol,
+.close-symbol {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  line-height: 1;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fallback styles if images don't load */
+.image-button img[src=""],
+.home-button img[src=""] {
+  width: 40px;
+  height: 40px;
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.gif-image[src=""] {
+  width: 100px;
+  height: 100px;
+  background-color: #ddd;
+  border-radius: 8px;
+}
